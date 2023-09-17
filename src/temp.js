@@ -7,24 +7,19 @@ const [ searchValue , setSearchValue] = useState("Chemnitz") ;
 const getWeatherInfo = async()=> {
  try{
   let url =  
-  `https://api.openweathermap.org/data/2.5/weather?q=${searchValue}&appid=177f01a2d62e1d420e2bdfdb235f75f4` 
-    const res = await fetch(url);
-   const data = await res.json();
-
-   console.log(data)
-
+  `https://api.openweathermap.org/data/2.5/weather?q=${searchValue}&units=metric&appid=177f01a2d62e1d420e2bdfdb235f75f4` 
+    let res = await fetch(url);
+    let data = await res.json();
+  
+      const {temp , humidity , pressure} = data.main ;
+      const {main : weathermood} = data.weather
+      console.log(temp , humidity , pressure , weathermood)
  }
-
-catch (error){
-
+catch (error) {
 console.log(error)
  }
-
 } ; 
   
-
-
-
  useEffect(()=> {
   getWeatherInfo();
  } , []);
