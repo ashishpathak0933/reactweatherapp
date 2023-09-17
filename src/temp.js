@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from 'react'
+import Weathercard from './weathercard';
 import "./style.css"
+
+
+
+
+
+
 const Temp = () => {
 
 const [ searchValue , setSearchValue] = useState("Chemnitz") ;
-
+const [ tempInfo , setTempInfo] = useState({})
 const getWeatherInfo = async()=> {
  try{
   let url =  
@@ -12,8 +19,23 @@ const getWeatherInfo = async()=> {
     let data = await res.json();
   
       const {temp , humidity , pressure} = data.main ;
-      const {main : weathermood} = data.weather
-      console.log(temp , humidity , pressure , weathermood)
+      const {main : weathermood} = data.weather[0];
+      const {name} = data; 
+      const  {speed} = data.wind;
+      const  {country , sunset} = data.sys;
+     
+
+      const myNewWeatherInfo = {
+        temp , 
+        humidity , 
+        pressure,
+        weathermood,
+        name,
+        speed, 
+        country ,
+        sunset,
+      }
+     setTempInfo(myNewWeatherInfo);
  }
 catch (error) {
 console.log(error)
@@ -36,82 +58,12 @@ console.log(error)
             onChange={(e) => setSearchValue(e.target.value)}
            />
 
-           <button className='searchButton' type='button'onClick={getWeatherInfo} >
-
-
-        Search</button>
+           <button className='searchButton' type='button'onClick={getWeatherInfo} >  
+           Search
+           </button>
       </div>
       </div>
-      
-      {/* nich wala area
-         */}
-      <article className='widget'>
-        <div className='weatherIcon'>
-         <i className={"wi wi-day-sunny"}></i>
-        </div>
-
-        <div className='weatherInfo'>
-        <div className='temperature'>
-        <span>25.5</span>
-        </div>
-         
-        <div className='description'>
-        <div className='weatherCondition'>sunny</div>
-           <div className='place'> Ambala, India </div>
-        </div>
-        </div>
-
-        <div className='date'>{new Date().toLocaleString()}</div>
-
-          {/* ummmm 4 sections jo divdie kiye the 
-         */}
-         <div className="extra-temp">
-          <div className="temp-info-minmax">
-            <div className="two-sided-section">
-              <p>
-                <i className={"wi wi-sunset"}></i>
-              </p>
-              <p className="extra-info-leftside">
-                5:15 PM <br />
-                Sunset
-              </p>
-            </div>
-
-            <div className="two-sided-section">
-              <p>
-                <i className={"wi wi-humidity"}></i>
-              </p>
-              <p className="extra-info-leftside">
-                19:19 <br />
-                Humidity
-              </p>
-            </div>
-          </div>
-
-          <div className="weather-extra-info">
-            <div className="two-sided-section">
-              <p>
-                <i className={"wi wi-rain"}></i>
-              </p>
-              <p className="extra-info-leftside">
-                19:19 <br />
-                Pressure
-              </p>
-            </div>
-
-            <div className="two-sided-section">
-              <p>
-                <i className={"wi wi-strong-wind"}></i>
-              </p>
-              <p className="extra-info-leftside">
-                 19 :19 <br />
-                Speed
-              </p>
-            </div>
-          </div>
-        </div>
-        
-      </article>
+      < Weathercard tempInfo = {tempInfo}/>
     </div>
   )
 }
