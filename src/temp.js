@@ -9,7 +9,7 @@ import "./style.css"
 
 const Temp = () => {
 
-const [ searchValue , setSearchValue] = useState("Chemnitz") ;
+const [ searchValue , setSearchValue] = useState("Berlin") ;
 const [ tempInfo , setTempInfo] = useState({})
 const getWeatherInfo = async()=> {
  try{

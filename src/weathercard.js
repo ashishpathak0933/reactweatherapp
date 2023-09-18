@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState , useEffect } from 'react'
 
 const Weathercard = ({tempInfo}) => {
+const [weatherState, setWeatheState] = useState("")
+
    const{
     temp , 
         humidity , 
@@ -11,6 +13,35 @@ const Weathercard = ({tempInfo}) => {
         country ,
         sunset,
    } = tempInfo
+   useEffect(() => {    // umm like loook so if weathermood changes or api runs only 
+    if (weathermood) {
+      switch (weathermood) {
+        case 'Clouds':
+          setWeatheState("wi-day-cloudy");
+          break;
+        case 'Haze':
+          setWeatheState('wi-fog');
+          break;
+        case 'Clear':
+          setWeatheState('wi-day-sunny');
+          break;
+        case 'Mist':
+          setWeatheState('wi-dust');
+          break;
+
+        default:
+          setWeatheState('wi-day-sunny');
+          break;
+      }
+    }
+  }, [weathermood]);
+        
+  
+
+
+   let sec = sunset;
+  let date = new Date(sec * 1000);
+  let timeStr = `${date.getHours()}:${date.getMinutes()}`;
 
   return (
     <div>
@@ -18,7 +49,7 @@ const Weathercard = ({tempInfo}) => {
          */}
          <article className='widget'>
          <div className='weatherIcon'>
-          <i className={"wi wi-day-sunny"}></i>
+          <i className={`wi ${weatherState}`}></i>
          </div>
  
          <div className='weatherInfo'>
@@ -27,7 +58,7 @@ const Weathercard = ({tempInfo}) => {
          </div>
           
          <div className='description'>
-         <div className='weatherCondition'>sunny</div>
+         <div className='weatherCondition'>{weathermood}</div>
             <div className='place'> {name}, {country} </div>
          </div>
          </div>
@@ -43,7 +74,7 @@ const Weathercard = ({tempInfo}) => {
                  <i className={"wi wi-sunset"}></i>
                </p>
                <p className="extra-info-leftside">
-                {sunset}<br />
+                {timeStr} PM <br />
                  Sunset
                </p>
              </div>
