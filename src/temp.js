@@ -14,7 +14,7 @@ const [ tempInfo , setTempInfo] = useState({})
 const getWeatherInfo = async()=> {
  try{
   let url =  
-  `https://api.openweathermap.org/data/2.5/weather?q=${searchValue}&units=metric&appid=177f01a2d62e1d420e2bdfdb235f75f4` 
+  `https://api.openweathermap.org/data/2.5/weather?q=${searchValue}&units=metric&appid=` 
     let res = await fetch(url);
     let data = await res.json();
   
